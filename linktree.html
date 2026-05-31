@@ -3,124 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linktree - Marga IEPEAS</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Links - IEPEAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Tambahan khusus linktree */
-        .linktree-container {
-            max-width: 600px;
-            margin: 80px auto;
-            padding: 20px;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .profile h1 {
-            font-size: 48px;
-            color: white;
-            margin-bottom: 10px;
-        }
-        .profile p {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #030308; color: #e0e0e0; overflow-x: hidden; }
+        #spaceCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+
+        /* Navigasi */
+        nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; z-index: 999; background: rgba(3, 3, 8, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 210, 255, 0.1); }
+        .nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; background: linear-gradient(90deg, #00d2ff, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .menu-links { display: flex; gap: 20px; }
+        .menu-links a { color: #a0a0b0; text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .menu-links a:hover { color: #00d2ff; }
+
+        /* Container Linktree */
+        .container { max-width: 500px; margin: 120px auto; padding: 0 20px; text-align: center; }
+        .profile { margin-bottom: 40px; }
+        .profile h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; color: #fff; margin-bottom: 10px; }
+        .profile p { color: #00d2ff; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+
         .link-card {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 60px;
-            padding: 16px 24px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #e2e8f0;
-            font-weight: 500;
-            transition: 0.2s;
-            border: 1px solid rgba(59,130,246,0.3);
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px 25px; margin-bottom: 15px; border-radius: 50px;
+            text-decoration: none; color: #fff; font-weight: 600; transition: 0.4s ease;
+            backdrop-filter: blur(10px);
         }
         .link-card:hover {
-            background: #3b82f6;
-            transform: scale(1.02);
+            background: rgba(0, 210, 255, 0.1); border-color: #00d2ff;
+            transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
         }
-        .credit {
-            text-align: center;
-            font-size: 8px;
-            opacity: 0.5;
-            margin-top: 60px;
-        }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s ease;
-        }
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        @media (max-width: 650px) {
-            .profile h1 { font-size: 36px; }
-            .linktree-container { margin: 60px auto; }
-        }
+
+        .credit { font-size: 0.7rem; color: #404050; margin-top: 50px; font-family: 'Space Grotesk'; }
+        
+        /* Animasi */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
+        .fade-in.muncul { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <!-- Menu titik tiga -->
-    <div class="menu-container">
-        <div class="menu-toggle" id="menuToggle">☰</div>
-        <div class="menu-dropdown" id="menuDropdown">
-            <div class="menu-close" id="menuClose">✕</div>
-            <a href="home.html">🏠 Home</a>
-            <a href="web.html">📝 Daftar</a>
-            <a href="linktree.html">🔗 Linktree</a>
-            <a href="credit.html">🎖️ Credit</a>
+
+    <canvas id="spaceCanvas"></canvas>
+
+    <nav>
+        <div class="nav-brand">IEPEAS</div>
+        <div class="menu-links">
+            <a href="home.html">Home</a>
+            <a href="daftar.html">Daftar</a>
         </div>
-    </div>
+    </nav>
 
-    <div class="linktree-container">
-        <div class="profile scroll-reveal">
-            <h1>🌸 IEPEAS 🌸</h1>
-            <p>Marga Komunitas Edukasi & Solidaritas</p>
+    <div class="container">
+        <div class="profile fade-in">
+            <h1>IEPEAS</h1>
+            <p>Marga Komunitas Solid</p>
         </div>
 
-        <a href="https://www.tiktok.com/@marga.iepeas.ofc?_r=1&_t=ZS-95VbnRi6CnN" class="link-card scroll-reveal" target="_blank">🎵 TikTok Marga</a>
-        <a href="https://www.tiktok.com/@storyy_rama02?_r=1&_t=ZS-95VbljsXv9B" class="link-card scroll-reveal" target="_blank">👤 TikTok Owner</a>
-        <a href="https://chat.whatsapp.com/GMp0cUpgDjp3xJXsl7CojT?mode=gi_t" class="link-card scroll-reveal" target="_blank">💬 Grup WhatsApp</a>
-        <a href="https://github.com/Deepleakk" class="link-card scroll-reveal" target="_blank">🐙 GitHub</a>
-        <a href="web.html" class="link-card scroll-reveal">📝 Form Pendaftaran</a>
+        <a href="https://www.tiktok.com/@marga.iepeas.ofc" class="link-card fade-in" target="_blank">🎵 TikTok Marga</a>
+        <a href="https://www.tiktok.com/@storyy_rama02" class="link-card fade-in" target="_blank">👤 TikTok Owner</a>
+        <a href="https://chat.whatsapp.com/GMp0cUpgDjp3xJXsl7CojT" class="link-card fade-in" target="_blank">💬 Grup WhatsApp</a>
+        <a href="https://github.com/Deepleakk" class="link-card fade-in" target="_blank">🐙 GitHub</a>
+        <a href="daftar.html" class="link-card fade-in">📝 Form Pendaftaran</a>
 
-        <div class="credit scroll-reveal">©IEPEAS</div>
+        <div class="credit fade-in">© 2026 IEPEAS NETWORK</div>
     </div>
-
-    <!-- Background nebula -->
-    <script src="nebula.js"></script>
-    
-    <!-- Efek hujan -->
-    <script src="rain.js"></script>
 
     <script>
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.scroll-reveal');
-        function checkReveal() {
-            for (let el of revealElements) {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 80) {
-                    el.classList.add('revealed');
-                }
-            }
-        }
-        window.addEventListener('scroll', checkReveal);
-        checkReveal();
+        // Animasi Bintang Background
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
 
-        // Menu dropdown
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const menuClose = document.getElementById('menuClose');
-        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
-        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
-        menuDropdown.addEventListener('click', (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); });
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            for(let i=0; i<100; i++) stars.push({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.5});
+        }
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', init);
+        init(); draw();
+
+        // Animasi Fade In
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('muncul'); });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
