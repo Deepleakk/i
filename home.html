@@ -4,290 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Marga IEPEAS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           CSS TAMPILAN (GLASSMORPHISM)
+           UI PREMIUM - MODERN AEROSPACE & SCI-FI
         ========================================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
-            background-color: #050510;
-            background-image: radial-gradient(circle at 50% 0%, #1a1a3a 0%, #050510 70%);
+            background-color: #030308;
+            background-image: radial-gradient(circle at 50% -20%, #151030 0%, #030308 80%);
             color: #e0e0e0;
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Navigasi */
+        /* Navigasi Glass Premium */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            z-index: 999;
-            background: rgba(10, 10, 20, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; z-index: 999;
+            background: rgba(3, 3, 8, 0.6);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+            transition: all 0.5s ease;
         }
 
         .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 2px;
-            /* Biar tulisan IEPEAS tetep di kanan kalau tombol menu di kiri (khusus HP) */
-            margin-left: auto; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 3px;
+            background: linear-gradient(90deg, #00d2ff, #7000ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-left: auto;
         }
 
-        .menu-links {
-            display: flex;
-            gap: 20px;
-        }
-
+        .menu-links { display: flex; gap: 30px; }
         .menu-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
+            color: #a0a0b0; text-decoration: none; font-size: 0.95rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; transition: 0.4s ease; position: relative;
         }
-
-        .menu-links a:hover { color: #00d2ff; }
         
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1000; /* Biar tombol silang tetep di atas menu */
+        /* Garis bawah animasi pas di-hover */
+        .menu-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background: #00d2ff; transition: width 0.4s ease;
         }
+        .menu-links a:hover { color: #fff; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
+        .menu-links a:hover::after { width: 100%; }
+        
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #fff; z-index: 1000; transition: 0.3s; }
+        .menu-toggle:hover { color: #00d2ff; }
 
         /* Layout Utama */
-        main {
-            max-width: 900px;
-            margin: 100px auto 20px;
-            padding: 0 20px;
-        }
+        main { max-width: 1000px; margin: 120px auto 40px; padding: 0 20px; }
 
-        /* Efek Kaca (Glassmorphism) */
+        /* General Glass Panel */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px; padding: 3rem; margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
+            transition: transform 0.5s ease, border-color 0.5s ease;
         }
 
-        /* Teks & Konten */
-        h1 {
-            font-size: 3rem;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
-            text-align: center;
-            cursor: pointer;
+        /* Hover efek buat panel utama */
+        .glass-panel:hover {
+            border-color: rgba(0, 210, 255, 0.3);
+            transform: translateY(-5px);
         }
-        h2, h3 { color: #fff; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-        .subtitle { text-align: center; color: #bbb; margin-bottom: 20px; }
-        
+
+        /* Hero Section Spesial */
+        .hero { text-align: center; padding: 4rem 2rem; border: none; background: transparent; box-shadow: none; }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, #00d2ff, #7000ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.3));
+        }
+        .hero .subtitle { font-size: 1.2rem; color: #a0a0b0; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; }
+
         .badge {
-            display: inline-block;
-            background: rgba(0, 210, 255, 0.1);
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #00d2ff;
-            margin: 5px;
-        }
-        
-        ul { list-style: none; }
-        ul li { margin-bottom: 10px; padding-left: 25px; position: relative; }
-        ul li::before { content: "🔹"; position: absolute; left: 0; top: 2px; font-size: 0.8rem; }
-        .highlight { color: #ff4d4d; font-weight: 700; }
-
-        /* Tombol */
-        .btn-daftar {
-            display: block;
-            width: fit-content;
-            margin: 0 auto;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+            display: inline-block; background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2);
+            padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; color: #00d2ff;
+            margin: 5px; backdrop-filter: blur(5px);
             transition: 0.3s;
         }
-        .btn-daftar:hover { transform: translateY(-3px); }
+        .badge:hover { background: rgba(0, 210, 255, 0.2); transform: scale(1.05); box-shadow: 0 0 15px rgba(0,210,255,0.4); }
 
-        /* Animasi Awal (DIBIKIN 3 DETIK SUPER MULUS) */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            /* Pake cubic-bezier biar efeknya kayak film (cepat di awal, pelan di akhir) */
-            transition: opacity 3s cubic-bezier(0.25, 1, 0.5, 1), transform 3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .fade-in.muncul {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Headers Styling */
+        h2 { font-size: 2rem; color: #fff; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        h2::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,210,255,0.5), transparent); margin-left: 15px; }
 
-        /* Mode HP */
+        /* GRID CARDS BUAT KEUNGGULAN (Biar ga ngebosenin) */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            padding: 25px; border-radius: 16px; transition: 0.4s ease;
+        }
+        .feature-card:hover {
+            background: rgba(0, 210, 255, 0.05); border-color: #00d2ff;
+            transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,210,255,0.1);
+        }
+        .feature-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
+        .feature-title { font-weight: 600; color: #fff; margin-bottom: 10px; font-size: 1.1rem; }
+        .feature-desc { font-size: 0.9rem; color: #a0a0b0; }
+
+        /* List Peraturan Modern */
+        .peraturan-list { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+        .peraturan-list li {
+            background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; border-left: 4px solid #3a7bd5;
+            display: flex; align-items: flex-start; gap: 15px; transition: 0.3s; font-size: 0.95rem;
+        }
+        .peraturan-list li:hover { transform: translateX(10px); border-left-color: #00d2ff; background: rgba(255,255,255,0.05); }
+        .peraturan-list li::before { content: '🛡️'; font-size: 1.2rem; }
+        .highlight-rule { border-left-color: #ff0055 !important; background: rgba(255,0,85,0.05) !important; color: #fff; font-weight: 600; }
+        .highlight-rule::before { content: '⚠️' !important; }
+
+        /* Tombol Premium dengan efek Pulse */
+        .btn-daftar {
+            display: inline-block; padding: 16px 45px; font-size: 1.2rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: #fff; text-decoration: none; border-radius: 50px;
+            background: linear-gradient(90deg, #00d2ff, #7000ff, #00d2ff); background-size: 200% auto;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            transition: 0.5s; position: relative; z-index: 1;
+            animation: gradientMove 3s linear infinite, pulseGlow 2s infinite;
+        }
+        .btn-daftar:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 40px rgba(112, 0, 255, 0.6); }
+
+        /* Animasi Keren */
+        @keyframes gradientMove { to { background-position: 200% center; } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0,210,255,0.4); } 50% { box-shadow: 0 0 30px rgba(0,210,255,0.8); } 100% { box-shadow: 0 0 15px rgba(0,210,255,0.4); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* Elemen Melayang Terus Menerus */
+        .floating-element { animation: float 6s ease-in-out infinite; }
+        
+        /* Animasi Muncul Scroll (2.5s Smooth) */
+        .fade-in { opacity: 0; transform: translateY(60px) scale(0.95); transition: opacity 2.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 2.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .fade-in.muncul { opacity: 1; transform: translateY(0) scale(1); }
+
+        /* Responsif HP */
         @media (max-width: 768px) {
-            nav {
-                flex-direction: row-reverse; /* Pindahin tombol menu ke kiri, logo ke kanan */
-            }
+            nav { flex-direction: row-reverse; padding: 15px 20px; }
             .menu-toggle { display: block; }
-            .nav-brand { margin-left: 0; } /* Reset margin logo */
-
+            .nav-brand { margin-left: 0; font-size: 1.5rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .glass-panel { padding: 2rem 1.5rem; }
+            
             .menu-links {
-                position: fixed;
-                top: 0;
-                left: -100%; /* SEMBUNYI DI KIRI */
-                width: 250px;
-                height: 100vh;
-                background: rgba(10, 10, 20, 0.95);
-                backdrop-filter: blur(15px);
-                flex-direction: column;
-                padding: 80px 30px 30px; /* Padding atas digedein biar ga nabrak tombol X */
-                /* Animasi menu geser 2.5 detik super mulus */
-                transition: left 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+                position: fixed; top: 0; left: -100%; width: 280px; height: 100vh;
+                background: rgba(5, 5, 15, 0.98); border-right: 1px solid rgba(0,210,255,0.1);
+                flex-direction: column; padding: 100px 40px 40px;
+                transition: left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 20px 0 50px rgba(0,0,0,0.5);
             }
-            .menu-links.aktif { left: 0; } /* MUNCUL DARI KIRI */
+            .menu-links.aktif { left: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigasi -->
     <nav>
         <div class="nav-brand">IEPEAS</div>
         <div class="menu-toggle" id="menuToggle">☰</div>
         <div class="menu-links" id="menuLinks">
-            <a href="home.html">🏠 Home</a>
-            <a href="web.html">📝 Daftar</a>
-            <a href="linktree.html">🔗 Linktree</a>
-            <a href="credit.html">🎖️ Credit</a>
+            <a href="home.html">Home</a>
+            <a href="web.html">Daftar</a>
+            <a href="linktree.html">Links</a>
+            <a href="credit.html">Credit</a>
         </div>
     </nav>
 
     <main>
-        <!-- Hero Section -->
-        <section class="glass-panel fade-in">
-            <h1 id="judul">🌸 IEPEAS 🌸</h1>
+        <section class="hero fade-in floating-element">
+            <h1>IEPEAS</h1>
             <p class="subtitle">Marga Komunitas Solid & Positif</p>
-            <div style="text-align: center;">
-                <span class="badge">✈️ IEP : International Education Plane</span>
-                <span class="badge">🌌 EAS : Education Astronomi and Ship</span>
+            <div>
+                <span class="badge">✈️ IEP : Int. Education Plane</span>
+                <span class="badge">🌌 EAS : Edu. Astronomi & Ship</span>
             </div>
         </section>
 
-        <!-- Keunggulan -->
-        <section class="glass-panel fade-in">
-            <h2>✨ Keunggulan Marga</h2>
-            <ul>
-                <li>Pengetahuan pesawat terbang modern & klasik</li>
-                <li>Eksplorasi planet dan ilmu antariksa</li>
-                <li>Saling membantu dalam masalah sesama anggota</li>
-                <li>Komunitas tanpa kerusuhan, penuh positif</li>
-                <li>Diskusi rutin dan sharing ilmu</li>
-            </ul>
+        <section class="fade-in" style="text-align: center; margin-bottom: 5rem;">
+            <a href="web.html" class="btn-daftar">Join Sekarang</a>
         </section>
 
-        <!-- Pendaftaran -->
-        <section class="glass-panel fade-in" style="text-align: center; border: none; background: transparent; box-shadow: none;">
-            <a href="web.html" class="btn-daftar">📝 Daftar Sekarang</a>
-            <p style="margin-top: 15px; font-size: 0.85rem; color: #888; font-style: italic;">
-                "Kami menjunjung nilai kesopanan, etika, dan adab. Wajib patuhi peraturan!"
+        <section class="glass-panel fade-in">
+            <h2>Keunggulan Kami</h2>
+            <div class="grid-container">
+                <div class="feature-card">
+                    <span class="feature-icon">✈️</span>
+                    <div class="feature-title">Aviation Mastery</div>
+                    <div class="feature-desc">Mendalami ilmu pesawat terbang modern hingga sejarah klasik dunia penerbangan.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🪐</span>
+                    <div class="feature-title">Space Exploration</div>
+                    <div class="feature-desc">Eksplorasi mendalam tentang planet, bintang, dan misteri tata surya kita.</div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🤝</span>
+                    <div class="feature-title">Solid Brotherhood</div>
+                    <div class="feature-desc">Komunitas positif tanpa toxic. Saling bantu dan sharing ilmu tiap hari.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-panel fade-in">
+            <h2>Tentang Kami</h2>
+            <p style="font-size: 1.1rem; color: #ccc;">
+                <strong>Marga IEPEAS</strong> lahir dari kecintaan terhadap dunia penerbangan dan eksplorasi perkapalan serta antariksa. Kami percaya pengetahuan dan solidaritas adalah kunci untuk terbang lebih tinggi.
             </p>
+            <div style="margin-top: 20px; padding: 20px; background: rgba(0,210,255,0.05); border-radius: 12px; border-left: 4px solid #00d2ff;">
+                <em style="color: #00d2ff; font-size: 1.1rem;">"Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</em>
+            </div>
         </section>
 
-        <!-- Peraturan -->
         <section class="glass-panel fade-in">
-            <h3>📜 Peraturan Wajib Marga</h3>
-            <ul>
-                <li>Dilarang keras pedofil atau bercanda ke arah sana</li>
-                <li>No Toxic</li>
-                <li>Kirim Foto minimal "sekali lihat" kecuali PENTING!!</li>
-                <li>Harus Toleransi & Ga boleh ada yang merendahkan</li>
-                <li>Ga boleh membeda-bedakan Agama dan Suku</li>
-                <li>Ga boleh kirim stiker Jomok/18+</li>
-                <li>Usia 13 tahun+</li>
-                <li>No buat ricuh sama marga lain!!!</li>
-                <li>Wajib pakai nama tiktok IEPEAS</li>
-                <li class="highlight">WAJIB BUAT KONTEN EDUKASI (Pesawat, Kapal, Astronomi)</li>
-                <li class="highlight">Ingat perintah owner itu mutlak</li>
+            <h2>Peraturan Wajib</h2>
+            <ul class="peraturan-list">
+                <li>Dilarang keras menyinggung hal pedofilia/18+. Sanksi tegas!</li>
+                <li>Dilarang Toxic, menjunjung tinggi toleransi, dan dilarang merendahkan agama/suku.</li>
+                <li>Kirim foto wajib menggunakan fitur "Sekali Lihat" kecuali untuk info krusial.</li>
+                <li>Usia minimal bergabung adalah 13 Tahun ke atas.</li>
+                <li>Dilarang menyebarkan nomor Admin atau Member ke pihak luar.</li>
+                <li>Wajib menggunakan nama TikTok IEPEAS dan hashtag #margaiepeas tiap upload.</li>
+                <li class="highlight-rule">WAJIB BUAT KONTEN EDUKASI (Pesawat, Kapal, Astronomi)</li>
+                <li class="highlight-rule">Perintah dari Owner adalah mutlak dan harus diikuti.</li>
             </ul>
-        </section>
-
-        <!-- Tentang Kami -->
-        <section class="glass-panel fade-in">
-            <h2>📖 Tentang Kami</h2>
-            <p><strong>Marga IEPEAS</strong> lahir dari kecintaan terhadap dunia penerbangan (International Education Plane) dan eksplorasi antariksa & perkapalan (Education Astronomi and Ship).</p>
-            <br>
-            <p>📌 <strong>Motto:</strong> "Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</p>
         </section>
     </main>
 
-    <!-- =========================================
-         JAVASCRIPT (ANIMASI & MENU)
-    ========================================= -->
     <script>
-        // 1. Menu HP Toggle (Sekarang bisa nutup sendiri)
+        // Menu HP Toggle 
         const menuToggle = document.getElementById('menuToggle');
         const menuLinks = document.getElementById('menuLinks');
 
-        // Fungsi buat buka/tutup menu
         function toggleMenu() {
             menuLinks.classList.toggle('aktif');
             menuToggle.innerHTML = menuLinks.classList.contains('aktif') ? '✕' : '☰';
         }
-
-        // Pas tombol burger diklik
         menuToggle.addEventListener('click', toggleMenu);
 
-        // Pas link di dalem menu diklik (Biar menu nutup)
+        // Auto Close Menu
         const links = menuLinks.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menuLinks.classList.remove('aktif');
-                menuToggle.innerHTML = '☰';
-            });
-        });
-
-        // Pas ngeklik sembarang di luar menu (Biar menu nutup)
+        links.forEach(link => link.addEventListener('click', () => { menuLinks.classList.remove('aktif'); menuToggle.innerHTML = '☰'; }));
         document.addEventListener('click', (e) => {
             if (!menuLinks.contains(e.target) && !menuToggle.contains(e.target) && menuLinks.classList.contains('aktif')) {
-                menuLinks.classList.remove('aktif');
-                menuToggle.innerHTML = '☰';
+                menuLinks.classList.remove('aktif'); menuToggle.innerHTML = '☰';
             }
         });
 
-        // 2. Animasi Scroll (Lebih mulus)
+        // Animasi Scroll Super Mulus
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('muncul');
+                    // Opsional: berhentiin observe kalo mau animasi cuma jalan sekali pas pertama liat
+                    // observer.unobserve(entry.target); 
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.15 }); // 15% elemen keliatan baru animasi jalan
 
-        const fadeElements = document.querySelectorAll('.fade-in');
-        fadeElements.forEach((el) => observer.observe(el));
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     </script>
 </body>
 </html>
