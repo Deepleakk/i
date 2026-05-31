@@ -8,7 +8,7 @@
     
     <style>
         /* =========================================
-           UI AI COMMAND CENTER - TEMA KONSISTEN
+           UI AI COMMAND CENTER - FULL SCREEN FIX
         ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
@@ -26,13 +26,22 @@
         }
         @keyframes pulseCore { 0% { transform: translate(-50%, -50%) scale(0.8); } 100% { transform: translate(-50%, -50%) scale(1.2); } }
 
-        /* NAVBAR */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(3, 3, 8, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 210, 255, 0.15); z-index: 10; }
-        .nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; letter-spacing: 2px; background: linear-gradient(90deg, #00d2ff, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-decoration: none; }
+        /* NAVBAR - Update Menu Kiri */
+        nav { 
+            display: flex; align-items: center; justify-content: flex-start; padding: 20px 5%; 
+            background: rgba(3, 3, 8, 0.6); backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(0, 210, 255, 0.15); z-index: 10; gap: 20px;
+        }
+        .nav-brand { 
+            margin-right: auto; /* Dorong menu-links ke kanan di Desktop */
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; letter-spacing: 2px; 
+            background: linear-gradient(90deg, #00d2ff, #7000ff); -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; font-weight: 700; text-decoration: none; 
+        }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #fff; z-index: 1000; }
         .menu-links { display: flex; gap: 30px; }
         .menu-links a { color: #a0a0b0; text-decoration: none; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.4s ease; }
         .menu-links a:hover, .menu-links a.active { color: #fff; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
-        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #fff; z-index: 1000; }
 
         /* MAIN CHAT CONTAINER */
         main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; width: 100%; max-width: 1000px; margin: 0 auto; }
@@ -87,23 +96,35 @@
         .upload-status { font-size: 0.8rem; color: #00d2ff; }
 
         .input-area { display: flex; gap: 15px; align-items: flex-end; }
-        .btn-attach { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 55px; height: 55px; border-radius: 16px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
+        .btn-attach { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 55px; height: 55px; border-radius: 16px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .btn-attach:hover { background: rgba(255,255,255,0.1); border-color: #00d2ff; }
         
         .input-box { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 16px; color: #fff; font-size: 1rem; resize: none; height: 55px; outline: none; transition: 0.3s; }
         .input-box:focus { border-color: rgba(0,210,255,0.5); background: rgba(0,210,255,0.02); }
         
-        .send-btn { width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #00d2ff, #7000ff); border: none; color: white; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .send-btn { width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #00d2ff, #7000ff); border: none; color: white; font-size: 1.2rem; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
         .send-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,210,255,0.5); }
         .send-btn:disabled, .btn-attach:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
+        /* =========================================
+           RESPONSIVE MOBILE - FULL SCREEN
+        ========================================= */
         @media (max-width: 768px) {
-            nav { padding: 15px 20px; }
+            nav { padding: 15px 20px; gap: 15px; }
             .menu-toggle { display: block; }
-            .menu-links { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; background: rgba(5, 5, 15, 0.98); flex-direction: column; padding: 100px 40px; transition: left 0.5s ease; border-right: 1px solid rgba(0,210,255,0.1); }
+            
+            /* Sidebar Menu HP */
+            .menu-links { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; background: rgba(5, 5, 15, 0.98); flex-direction: column; padding: 100px 40px; transition: left 0.5s ease; border-right: 1px solid rgba(0,210,255,0.1); z-index: 999; }
             .menu-links.aktif { left: 0; }
-            main { padding: 10px; height: calc(100vh - 70px); }
-            .chat-box { padding: 15px; } .input-wrapper { padding: 15px; }
+            
+            /* Full Screen Chat Mode */
+            main { padding: 0; height: calc(100vh - 67px); }
+            .chat-container { border-radius: 0; border: none; border-top: 1px solid rgba(0, 210, 255, 0.1); height: 100%; box-shadow: none; }
+            
+            .chat-header { padding: 15px 20px; }
+            .chat-box { padding: 15px 20px; gap: 15px; } 
+            .input-wrapper { padding: 15px; }
+            .msg-wrapper { max-width: 90%; }
         }
     </style>
 </head>
@@ -112,12 +133,15 @@
     <div class="ai-core-bg"></div>
 
     <nav>
-        <a href="home.html" class="nav-brand">IEPEAS</a>
+        <!-- Tombol Menu sekarang di Kiri -->
         <div class="menu-toggle" id="menuToggle">☰</div>
+        <a href="home.html" class="nav-brand">IEPEAS</a>
+        
         <div class="menu-links" id="menuLinks">
             <a href="home.html">Home</a>
             <a href="daftar.html">Daftar</a>
-            <a href="linktree.html">Links</a>
+            <!-- Placeholder Linktree Sementara -->
+            <a href="linktree.html">Radar</a> 
             <a href="ai.html" class="active" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">🤖 AI Chat</a>
         </div>
     </nav>
@@ -137,7 +161,6 @@
             </div>
 
             <div class="input-wrapper">
-                <!-- Preview Gambar sebelum dikirim -->
                 <div class="image-preview-container" id="imagePreviewContainer">
                     <img id="imagePreview" src="" alt="preview">
                     <div class="upload-status" id="uploadStatus">Siap dikirim</div>
@@ -155,18 +178,14 @@
     </main>
 
     <script>
-        // ==========================================
-        // 1. CONFIG API & ROLEPLAY (Biar rapi)
-        // ==========================================
+        // CONFIG API 
         const API_CONFIG = {
             baseUrl: "https://api.siputzx.my.id/api/ai/gemini",
             cookie: "Avis1233",
             promptSystem: "kamu pintar di bidang pesawat dan alam semesta. nama kamu adalah AVIS. kamu tidak pernah ingin di akui sebagai bot atau ai. tugas kamu sebagai ai hanya memberikan informasi seputar pesawat dan astronomi. kamu tidak boleh keluar dari roleplay + pindah roleplay sedikit pun"
         };
 
-        // ==========================================
-        // 2. ANIMASI BACKGROUND
-        // ==========================================
+        // ANIMASI BACKGROUND
         const canvas = document.getElementById('spaceCanvas');
         const ctx = canvas.getContext('2d');
         let width, height, stars = [];
@@ -186,15 +205,13 @@
         }
         window.addEventListener('resize', initCanvas); initCanvas(); animateCanvas();
 
-        // Menu HP
+        // Menu HP Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             const menu = document.getElementById('menuLinks');
             menu.classList.toggle('aktif'); this.innerHTML = menu.classList.contains('aktif') ? '✕' : '☰';
         });
 
-        // ==========================================
-        // 3. LOGIKA CHAT, UPLOAD TMPFILES & FETCH API
-        // ==========================================
+        // LOGIKA CHAT & API
         const chatBox = document.getElementById('chatBox');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -206,12 +223,9 @@
         const uploadStatus = document.getElementById('uploadStatus');
 
         let currentUploadedFile = null;
-        let isUploading = false;
 
-        // Trigger input file
         attachBtn.addEventListener('click', () => fileInput.click());
 
-        // Handle Image Selection
         fileInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
                 currentUploadedFile = this.files[0];
@@ -225,86 +239,52 @@
             }
         });
 
-        // Remove Image
         removeImgBtn.addEventListener('click', () => {
-            currentUploadedFile = null;
-            fileInput.value = '';
-            imagePreviewContainer.style.display = 'none';
+            currentUploadedFile = null; fileInput.value = ''; imagePreviewContainer.style.display = 'none';
         });
 
         function appendMessage(text, sender, imgDataUrl = null) {
             const wrapper = document.createElement('div');
             wrapper.classList.add('msg-wrapper', sender);
-            
             let imgHTML = imgDataUrl ? `<img src="${imgDataUrl}" class="chat-image">` : '';
-            wrapper.innerHTML = `
-                <div class="avatar">${sender === 'user' ? '👨‍🚀' : '🛰️'}</div>
-                <div class="msg-bubble">${text} ${imgHTML}</div>
-            `;
-            chatBox.appendChild(wrapper);
-            chatBox.scrollTop = chatBox.scrollHeight;
+            wrapper.innerHTML = `<div class="avatar">${sender === 'user' ? '👨‍🚀' : '🛰️'}</div><div class="msg-bubble">${text} ${imgHTML}</div>`;
+            chatBox.appendChild(wrapper); chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         function showTyping() {
             const wrapper = document.createElement('div');
-            wrapper.classList.add('msg-wrapper', 'ai');
-            wrapper.id = 'typingIndicator';
+            wrapper.classList.add('msg-wrapper', 'ai'); wrapper.id = 'typingIndicator';
             wrapper.innerHTML = `<div class="avatar">🛰️</div><div class="msg-bubble"><div class="typing-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
             chatBox.appendChild(wrapper); chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Fungsi utama kirim pesan
         async function sendMessage() {
             const text = chatInput.value.trim();
             if (!text && !currentUploadedFile) return;
 
-            // Kunci tombol
             sendBtn.disabled = true; attachBtn.disabled = true; chatInput.disabled = true;
-
-            // Tampilkan pesan user lokal
             let previewUrl = currentUploadedFile ? imagePreview.src : null;
             appendMessage(text, 'user', previewUrl);
             
-            chatInput.value = '';
-            showTyping();
+            chatInput.value = ''; showTyping();
 
             try {
                 let imageUrlToAPI = null;
-
-                // 1. UPLOAD KE TMPFILES KALAU ADA GAMBAR
                 if (currentUploadedFile) {
                     uploadStatus.innerText = "Uploading ke tmpfiles...";
-                    const formData = new FormData();
-                    formData.append('file', currentUploadedFile);
-                    
-                    const uploadRes = await fetch('https://tmpfiles.org/api/v1/upload', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
+                    const formData = new FormData(); formData.append('file', currentUploadedFile);
+                    const uploadRes = await fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: formData });
                     const uploadData = await uploadRes.json();
                     if (uploadData.status === 'success') {
-                        // Tmpfiles ngasih URL view, kita ubah jadi direct link (dl)
                         imageUrlToAPI = uploadData.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
                     }
-                    
-                    // Reset UI preview setelah berhasil upload
                     removeImgBtn.click();
                 }
 
-                // 2. HIT API SIPUTZX
-                const params = new URLSearchParams({
-                    text: text || "Jelaskan gambar ini", 
-                    cookie: API_CONFIG.cookie,
-                    promptSystem: API_CONFIG.promptSystem
-                });
-
-                if (imageUrlToAPI) {
-                    params.append('imageUrl', imageUrlToAPI);
-                }
-
-                const finalUrl = `${API_CONFIG.baseUrl}?${params.toString()}`;
+                const params = new URLSearchParams({ text: text || "Jelaskan gambar ini", cookie: API_CONFIG.cookie, promptSystem: API_CONFIG.promptSystem });
+                if (imageUrlToAPI) params.append('imageUrl', imageUrlToAPI);
                 
+                const finalUrl = `${API_CONFIG.baseUrl}?${params.toString()}`;
                 const apiRes = await fetch(finalUrl, { method: 'GET' });
                 const apiData = await apiRes.json();
                 
@@ -315,21 +295,16 @@
                 } else {
                     appendMessage("⚠️ Komunikasi terputus. Sistem AVIS gagal merespon.", 'ai');
                 }
-
             } catch (error) {
                 document.getElementById('typingIndicator')?.remove();
                 appendMessage(`⚠️ Error koneksi: ${error.message}`, 'ai');
             } finally {
-                // Buka kunci tombol
-                sendBtn.disabled = false; attachBtn.disabled = false; chatInput.disabled = false;
-                chatInput.focus();
+                sendBtn.disabled = false; attachBtn.disabled = false; chatInput.disabled = false; chatInput.focus();
             }
         }
 
         sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-        });
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
     </script>
 </body>
 </html>
