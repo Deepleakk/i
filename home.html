@@ -5,43 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Marga IEPEAS</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Tambahan animasi scroll reveal di home */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s ease;
-        }
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
 </head>
 <body>
-    <!-- Menu titik tiga -->
-    <div class="menu-container">
+    <canvas id="spaceBackground"></canvas>
+
+    <nav class="glass-navbar">
+        <div class="nav-brand">IEPEAS</div>
         <div class="menu-toggle" id="menuToggle">☰</div>
-        <div class="menu-dropdown" id="menuDropdown">
+        <div class="menu-links" id="menuDropdown">
             <div class="menu-close" id="menuClose">✕</div>
-            <a href="home.html">🏠 Home</a>
+            <a href="home.html" class="active">🏠 Home</a>
             <a href="web.html">📝 Daftar</a>
             <a href="linktree.html">🔗 Linktree</a>
             <a href="credit.html">🎖️ Credit</a>
         </div>
-    </div>
+    </nav>
 
-    <div class="container">
-        <div class="hero scroll-reveal">
+    <main class="container">
+        <section class="hero glass-panel scroll-reveal">
             <h1 id="iepeasTitle">🌸 IEPEAS 🌸</h1>
-            <p>Marga Komunitas Solid & Positif</p>
+            <p class="subtitle">Marga Komunitas Solid & Positif</p>
             <div class="singkatan">
-                <span>✈️ IEP : International Education Plane</span>
-                <span>🌌 EAS : Education Astronomi and Ship</span>
+                <span class="badge">✈️ IEP : International Education Plane</span>
+                <span class="badge">🌌 EAS : Education Astronomi and Ship</span>
             </div>
-        </div>
+        </section>
 
-        <div class="keunggulan scroll-reveal">
+        <section class="keunggulan glass-panel scroll-reveal">
             <h2>✨ Keunggulan Marga</h2>
             <ul class="feature-list">
                 <li>✈️ Pengetahuan pesawat terbang modern & klasik</li>
@@ -50,22 +40,21 @@
                 <li>🌟 Komunitas tanpa kerusuhan, penuh positif</li>
                 <li>📚 Diskusi rutin dan sharing ilmu</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="daftar-btn scroll-reveal">
-            <a href="web.html" class="btn-daftar">📝 Daftar Sekarang</a>
-        </div>
+        <section class="daftar-section scroll-reveal">
+            <a href="web.html" class="btn-daftar glass-btn">📝 Daftar Sekarang</a>
+            <p class="peraturan-kecil">
+                "Kami menjunjung nilai kesopanan, etika, dan adab. Untuk kamu yang mau join diharapkan mematuhi peraturan yang ada."
+            </p>
+        </section>
 
-        <div class="peraturan-kecil scroll-reveal">
-            "Kami menjunjung nilai kesopanan, etika, dan adab, untuk kamu yang mau join diharapkan untuk mematuhi peraturan yang ada"
-        </div>
-
-        <div class="peraturan-container scroll-reveal">
+        <section class="peraturan-container glass-panel scroll-reveal">
             <h3>📜 Peraturan Wajib Marga</h3>
             <ul class="peraturan-list">
-                <li>no pedofil, mau hal apapun bercanda dll, dilarang keras</li>
+                <li>Dilarang keras pedofil atau bercanda ke arah sana</li>
                 <li>No Toxic</li>
-                <li>Kirim Foto minimal sekali lihat kecuali PENTING!!</li>
+                <li>Kirim Foto minimal "sekali lihat" kecuali PENTING!!</li>
                 <li>Harus Toleransi</li>
                 <li>Ga boleh ada yang merendahkan</li>
                 <li>Ga boleh membeda-bedakan Agama dan Suku</li>
@@ -78,75 +67,28 @@
                 <li>Setiap mau upload video gunakan #margaiepeas</li>
                 <li>Dilarang buat konten berkesan menjatuhkan guru</li>
                 <li>Gak intro kick</li>
-                <li><strong>*WAJIB BUAT KONTEN EDUKASI*</strong></li>
-                <li><strong>*WAJIB BUAT KONTEN PESAWAT, KAPAL, DAN ASTRONOMI*</strong></li>
-                <li><strong>*ingat perintah owner itu mutlak*</strong></li>
+                <li class="highlight"><strong>*WAJIB BUAT KONTEN EDUKASI*</strong></li>
+                <li class="highlight"><strong>*WAJIB BUAT KONTEN PESAWAT, KAPAL, DAN ASTRONOMI*</strong></li>
+                <li class="highlight"><strong>*ingat perintah owner itu mutlak*</strong></li>
             </ul>
-        </div>
+        </section>
 
-        <div class="tentang-section scroll-reveal">
+        <section class="tentang-section glass-panel scroll-reveal">
             <h2>📖 Tentang Kami</h2>
             <div class="tentang-content">
                 <p><strong>Marga IEPEAS</strong> lahir dari kecintaan terhadap dunia penerbangan (International Education Plane) dan eksplorasi antariksa & perkapalan (Education Astronomi and Ship). Kami percaya bahwa pengetahuan dan solidaritas adalah kunci untuk berkembang bersama.</p>
                 <p>Visi kami: menjadi komunitas yang menginspirasi, saling mendukung, dan berkontribusi positif bagi masyarakat luas. Misi kami: menyediakan wadah diskusi yang sehat, membantu anggota yang mengalami kesulitan, serta menjaga nama baik marga dengan integritas.</p>
-                <p>📌 <strong>Motto:</strong> "Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</p>
+                <p class="motto">📌 <strong>Motto:</strong> "Bersama kita terbang tinggi, bersama kita jelajah alam semesta."</p>
                 <p>🤝 Bergabunglah dan rasakan kekeluargaan yang hangat!</p>
             </div>
-        </div>
+        </section>
+    </main>
 
-        <div class="credit scroll-reveal">©IEPEAS</div>
-    </div>
+    <footer class="footer glass-panel scroll-reveal">
+        <p>© 2026 Marga IEPEAS. All rights reserved.</p>
+    </footer>
 
-    <!-- Background nebula -->
-    <script src="nebula.js"></script>
-    
-    <!-- Efek hujan -->
-    <script src="rain.js"></script>
-
-    <script>
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.scroll-reveal');
-        function checkReveal() {
-            for (let el of revealElements) {
-                const rect = el.getBoundingClientRect();
-                const isVisible = rect.top < window.innerHeight - 100;
-                if (isVisible) {
-                    el.classList.add('revealed');
-                }
-            }
-        }
-        window.addEventListener('scroll', checkReveal);
-        checkReveal();
-
-        // Easter egg: klik judul IEPEAS
-        const title = document.getElementById('iepeasTitle');
-        function createFallingEmoji(emoji, xPos) {
-            const el = document.createElement('div');
-            el.className = 'falling-emoji';
-            el.textContent = emoji;
-            el.style.left = (xPos !== undefined ? xPos : Math.random() * window.innerWidth) + 'px';
-            const duration = 1.5 + Math.random() * 2;
-            el.style.animationDuration = duration + 's';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), duration * 1000);
-        }
-        title.addEventListener('click', () => {
-            const count = 18 + Math.floor(Math.random() * 12);
-            const emojis = ['✈️', '🌟', '⭐', '🚀', '🛸', '💫', '🌠'];
-            for (let i = 0; i < count; i++) {
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                const randomX = Math.random() * window.innerWidth;
-                setTimeout(() => createFallingEmoji(randomEmoji, randomX), Math.random() * 400);
-            }
-        });
-
-        // Menu dropdown
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const menuClose = document.getElementById('menuClose');
-        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
-        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
-        menuDropdown.addEventListener('click', (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); });
-    </script>
+    <script src="effect.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
