@@ -21,6 +21,17 @@
             scroll-behavior: smooth;
         }
 
+        /* CANVAS BACKGROUND LUAR ANGKASA */
+        #spaceCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Biar ada di paling belakang */
+            pointer-events: none; /* Biar ga ganggu pas ngeklik tombol */
+        }
+
         /* Navigasi Glass Premium */
         nav {
             position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
@@ -45,7 +56,6 @@
             letter-spacing: 1px; transition: 0.4s ease; position: relative;
         }
         
-        /* Garis bawah animasi pas di-hover */
         .menu-links a::after {
             content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
             background: #00d2ff; transition: width 0.4s ease;
@@ -70,7 +80,6 @@
             transition: transform 0.5s ease, border-color 0.5s ease;
         }
 
-        /* Hover efek buat panel utama */
         .glass-panel:hover {
             border-color: rgba(0, 210, 255, 0.3);
             transform: translateY(-5px);
@@ -98,7 +107,7 @@
         h2 { font-size: 2rem; color: #fff; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
         h2::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,210,255,0.5), transparent); margin-left: 15px; }
 
-        /* GRID CARDS BUAT KEUNGGULAN (Biar ga ngebosenin) */
+        /* GRID CARDS BUAT KEUNGGULAN */
         .grid-container {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
         }
@@ -125,7 +134,7 @@
         .highlight-rule { border-left-color: #ff0055 !important; background: rgba(255,0,85,0.05) !important; color: #fff; font-weight: 600; }
         .highlight-rule::before { content: '⚠️' !important; }
 
-        /* Tombol Premium dengan efek Pulse */
+        /* Tombol Premium */
         .btn-daftar {
             display: inline-block; padding: 16px 45px; font-size: 1.2rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 2px; color: #fff; text-decoration: none; border-radius: 50px;
@@ -136,15 +145,11 @@
         }
         .btn-daftar:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 40px rgba(112, 0, 255, 0.6); }
 
-        /* Animasi Keren */
         @keyframes gradientMove { to { background-position: 200% center; } }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0,210,255,0.4); } 50% { box-shadow: 0 0 30px rgba(0,210,255,0.8); } 100% { box-shadow: 0 0 15px rgba(0,210,255,0.4); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* Elemen Melayang Terus Menerus */
         .floating-element { animation: float 6s ease-in-out infinite; }
-        
-        /* Animasi Muncul Scroll (2.5s Smooth) */
         .fade-in { opacity: 0; transform: translateY(60px) scale(0.95); transition: opacity 2.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 2.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .fade-in.muncul { opacity: 1; transform: translateY(0) scale(1); }
 
@@ -167,6 +172,8 @@
     </style>
 </head>
 <body>
+
+    <canvas id="spaceCanvas"></canvas>
 
     <nav>
         <div class="nav-brand">IEPEAS</div>
@@ -240,7 +247,68 @@
     </main>
 
     <script>
-        // Menu HP Toggle 
+        // =========================================
+        // 1. ANIMASI BACKGROUND CANVAS (BINTANG)
+        // =========================================
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars;
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            stars = [];
+            
+            // Bikin 150 bintang dengan posisi dan kecepatan random
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.5, // Kecepatan gerak horizontal X
+                    vy: (Math.random() - 0.5) * 0.5, // Kecepatan gerak vertikal Y
+                    alpha: Math.random() // Transparansi awal buat kedap-kedip
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height); // Hapus frame lama
+            
+            stars.forEach(star => {
+                // Pindah posisi bintang
+                star.x += star.vx;
+                star.y += star.vy;
+                
+                // Bikin efek kedap-kedip
+                star.alpha += (Math.random() - 0.5) * 0.05;
+                if(star.alpha <= 0) star.alpha = 0.1;
+                if(star.alpha >= 1) star.alpha = 1;
+
+                // Kalo bintang tembus layar, balikin ke sisi sebaliknya
+                if (star.x < 0) star.x = width;
+                if (star.x > width) star.x = 0;
+                if (star.y < 0) star.y = height;
+                if (star.y > height) star.y = 0;
+
+                // Gambar bintangnya
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.fill();
+            });
+            
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        animateCanvas();
+
+
+        // =========================================
+        // 2. MENU HP & ANIMASI SCROLL
+        // =========================================
         const menuToggle = document.getElementById('menuToggle');
         const menuLinks = document.getElementById('menuLinks');
 
@@ -250,7 +318,6 @@
         }
         menuToggle.addEventListener('click', toggleMenu);
 
-        // Auto Close Menu
         const links = menuLinks.querySelectorAll('a');
         links.forEach(link => link.addEventListener('click', () => { menuLinks.classList.remove('aktif'); menuToggle.innerHTML = '☰'; }));
         document.addEventListener('click', (e) => {
@@ -259,16 +326,13 @@
             }
         });
 
-        // Animasi Scroll Super Mulus
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('muncul');
-                    // Opsional: berhentiin observe kalo mau animasi cuma jalan sekali pas pertama liat
-                    // observer.unobserve(entry.target); 
                 }
             });
-        }, { threshold: 0.15 }); // 15% elemen keliatan baru animasi jalan
+        }, { threshold: 0.15 });
 
         document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     </script>
