@@ -1,316 +1,218 @@
-/* style.css - untuk semua halaman IEPEAS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    min-height: 100vh;
-    background: transparent; /* biar canvas nebula kelihatan */
-    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-    color: #e2e8f0;
+    background-color: #050510; /* Warna dasar gelap luar angkasa */
+    color: #e0e0e0;
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* ========== MENU TITIK TIGA ========== */
-.menu-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-}
-
-.menu-toggle {
-    font-size: 28px;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(6px);
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: 0.2s;
-    border: 1px solid rgba(59,130,246,0.5);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.menu-toggle:hover {
-    background: #3b82f6;
-    color: white;
-    transform: scale(1.05);
-}
-
-.menu-dropdown {
+/* Background Canvas (effect.js) */
+#spaceBackground {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(10, 15, 28, 0.98);
-    backdrop-filter: blur(20px);
-    z-index: 99;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding-top: 120px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Wajib di belakang biar teks ga ketutup */
 }
 
-.menu-dropdown.show {
-    opacity: 1;
-    visibility: visible;
+/* --- EFEK GLASSMORPHISM KUNCI --- */
+.glass-panel, .glass-navbar {
+    background: rgba(255, 255, 255, 0.03); /* Transparan tipis */
+    backdrop-filter: blur(12px); /* Efek kaca blur */
+    -webkit-backdrop-filter: blur(12px); /* Support untuk browser Safari */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Garis tepi tipis */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Bayangan elegan */
 }
 
-.menu-dropdown a {
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    transition: 0.2s;
+.glass-panel {
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
 }
 
-.menu-dropdown a:hover {
-    color: #3b82f6;
-    transform: scale(1.05);
-}
-
-.menu-close {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    font-size: 32px;
-    cursor: pointer;
-    color: white;
-    background: none;
-    border: none;
-    transition: 0.2s;
-    z-index: 101;
-}
-
-.menu-close:hover {
-    transform: rotate(90deg);
-    color: #ffb347;
-}
-
-/* ========== CARD TRANSPARAN 85% + BLUR 5% ========== */
-.glass-card, .credit-card, .profile-card {
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 30px;
-    margin-bottom: 25px;
-}
-
-/* ========== KONTEN HOME ========== */
+/* Container & Layout Utama */
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 60px 20px;
-    position: relative;
-    z-index: 2;
+    padding: 100px 20px 20px; /* Padding atas biar ga nabrak navbar */
 }
 
+/* Navbar */
+.glass-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.menu-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* Disembunyiin di laptop */
+}
+
+.menu-links {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.menu-links a:hover, .menu-links a.active {
+    color: #00d2ff; /* Efek hover warna cyan/neon */
+}
+
+.menu-close {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+/* Hero Section */
 .hero {
     text-align: center;
-    margin-bottom: 50px;
+    margin-top: 1rem;
 }
 
 .hero h1 {
-    font-size: 56px;
-    color: white;
-    text-shadow: 0 0 8px rgba(0,0,0,0.5);
-    margin-bottom: 16px;
-    cursor: pointer;
-    display: inline-block;
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+    cursor: pointer; /* Menandakan bisa diklik (Easter egg) */
 }
 
-.hero p {
+.subtitle {
     font-size: 1.2rem;
-    opacity: 0.85;
-    margin-bottom: 15px;
+    color: #bbb;
+    margin-bottom: 20px;
 }
 
 .singkatan {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 10px 24px;
-    border-radius: 60px;
-    font-size: 0.95rem;
-    margin-top: 10px;
-    border: 1px solid rgba(59,130,246,0.3);
-}
-
-.keunggulan {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.keunggulan h2 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    display: inline-block;
-    border-bottom: 3px solid #60a5fa;
-    padding-bottom: 8px;
-}
-
-.feature-list {
-    list-style: none;
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: left;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    border-radius: 24px;
-    padding: 25px 35px;
-    border: 1px solid rgba(59,130,246,0.2);
-}
-
-.feature-list li {
-    margin-bottom: 14px;
-    font-size: 1.1rem;
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
-    gap: 12px;
 }
 
-.feature-list li::before {
-    content: "✨";
+.badge {
+    background: rgba(0, 210, 255, 0.1);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #00d2ff;
 }
 
-.daftar-btn {
+/* Tipografi & List (Peraturan/Keunggulan) */
+h2, h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+ul.feature-list, ul.peraturan-list {
+    list-style: none;
+}
+
+ul.feature-list li, ul.peraturan-list li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+ul.peraturan-list li {
+    padding-left: 25px;
+}
+
+ul.peraturan-list li::before {
+    content: "🔹";
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+    top: 4px;
+}
+
+/* Teks Merah Menyala buat peraturan penting */
+.highlight {
+    color: #ff4d4d;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 77, 77, 0.4);
+}
+
+/* Tombol Daftar */
+.daftar-section {
     text-align: center;
-    margin: 40px 0 20px;
+    margin: 3rem 0;
 }
 
 .btn-daftar {
-    background: #3b82f6;
-    border: none;
-    padding: 14px 40px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    border-radius: 50px;
-    text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
 }
 
 .btn-daftar:hover {
-    background: #2563eb;
-    transform: scale(1.02);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
 }
 
 .peraturan-kecil {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Footer */
+.footer {
     text-align: center;
-    font-size: 0.75rem;
-    opacity: 0.7;
-    margin-bottom: 30px;
-}
-
-.peraturan-container {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    border-radius: 28px;
-    padding: 25px 30px;
-    margin-bottom: 40px;
-    border: 1px solid rgba(59,130,246,0.3);
-}
-
-.peraturan-container h3 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #a78bfa;
-}
-
-.peraturan-list {
-    list-style: none;
-    padding-left: 10px;
-}
-
-.peraturan-list li {
-    margin-bottom: 10px;
+    padding: 15px;
     font-size: 0.9rem;
-    line-height: 1.5;
-    position: relative;
-    padding-left: 24px;
+    color: #aaa;
 }
 
-.peraturan-list li::before {
-    content: "•";
-    position: absolute;
-    left: 6px;
-    color: #60a5fa;
-}
-
-.peraturan-list li strong {
-    color: #facc15;
-}
-
-.tentang-section {
-    text-align: center;
-    margin: 30px 0 20px;
-}
-
-.tentang-section h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #a78bfa;
-}
-
-.tentang-content {
-    max-width: 750px;
-    margin: 0 auto;
-    text-align: left;
-    line-height: 1.7;
-    font-size: 1rem;
-    background: rgba(0,0,0,0.3);
-    padding: 25px 30px;
-    border-radius: 28px;
-    border: 1px solid rgba(59,130,246,0.2);
-}
-
-.credit {
-    text-align: center;
-    font-size: 8px;
-    opacity: 0.5;
-    margin-top: 60px;
-}
-
-/* ========== EASTER EGG ========== */
-.falling-emoji {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    font-size: 28px;
-    animation: fall linear forwards;
-    top: -20px;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-}
-
-/* ========== ANIMASI SCROLL REVEAL ========== */
+/* Animasi Muncul Saat Scroll */
 .scroll-reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.7s ease;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
 .scroll-reveal.revealed {
@@ -318,52 +220,51 @@ body {
     transform: translateY(0);
 }
 
-/* ========== CAROUSEL (geser) untuk credit.html ========== */
-.carousel-horizontal {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    scroll-snap-type: x mandatory;
-    padding: 10px 0 20px;
-    scroll-behavior: smooth;
+/* Animasi Emoji Jatuh (Dipanggil oleh main.js) */
+.falling-emoji {
+    position: fixed;
+    top: -50px;
+    font-size: 24px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: fall linear forwards;
 }
 
-.carousel-horizontal::-webkit-scrollbar {
-    height: 6px;
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
 }
 
-.carousel-horizontal::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
+/* Mode HP (Responsif) */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Tampilkan ikon menu burger */
+    }
 
-.carousel-horizontal::-webkit-scrollbar-thumb {
-    background: #3b82f6;
-    border-radius: 10px;
-}
+    .menu-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Sembunyikan ke samping kanan */
+        width: 250px;
+        height: 100vh;
+        background: rgba(10, 10, 20, 0.95);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        padding: 30px;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    }
 
-.carousel-item {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    border-radius: 28px;
-    padding: 20px;
-    border: 1px solid rgba(59,130,246,0.3);
-    transition: 0.2s;
-}
+    .menu-links.show {
+        right: 0; /* Munculkan menu */
+    }
 
-.carousel-item:hover {
-    transform: translateY(-5px);
-    background: rgba(59,130,246,0.2);
-}
-
-/* ========== RESPONSIF ========== */
-@media (max-width: 650px) {
-    .hero h1 { font-size: 36px; }
-    .keunggulan h2, .tentang-section h2, .peraturan-container h3 { font-size: 1.5rem; }
-    .feature-list { padding: 20px; }
-    .menu-dropdown a { font-size: 22px; }
-    .menu-dropdown { padding-top: 100px; }
-    .carousel-item { flex: 0 0 90%; }
+    .menu-close {
+        display: block;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
 }
