@@ -46,6 +46,8 @@
             font-weight: 700;
             color: #fff;
             letter-spacing: 2px;
+            /* Biar tulisan IEPEAS tetep di kanan kalau tombol menu di kiri (khusus HP) */
+            margin-left: auto; 
         }
 
         .menu-links {
@@ -66,6 +68,7 @@
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            z-index: 1000; /* Biar tombol silang tetep di atas menu */
         }
 
         /* Layout Utama */
@@ -131,11 +134,12 @@
         }
         .btn-daftar:hover { transform: translateY(-3px); }
 
-        /* Animasi Awal */
+        /* Animasi Awal (DIBIKIN 3 DETIK SUPER MULUS) */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(40px);
+            /* Pake cubic-bezier biar efeknya kayak film (cepat di awal, pelan di akhir) */
+            transition: opacity 3s cubic-bezier(0.25, 1, 0.5, 1), transform 3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .fade-in.muncul {
             opacity: 1;
@@ -144,19 +148,26 @@
 
         /* Mode HP */
         @media (max-width: 768px) {
+            nav {
+                flex-direction: row-reverse; /* Pindahin tombol menu ke kiri, logo ke kanan */
+            }
             .menu-toggle { display: block; }
+            .nav-brand { margin-left: 0; } /* Reset margin logo */
+
             .menu-links {
                 position: fixed;
                 top: 0;
-                right: -100%;
+                left: -100%; /* SEMBUNYI DI KIRI */
                 width: 250px;
                 height: 100vh;
                 background: rgba(10, 10, 20, 0.95);
+                backdrop-filter: blur(15px);
                 flex-direction: column;
-                padding: 60px 30px;
-                transition: 0.4s;
+                padding: 80px 30px 30px; /* Padding atas digedein biar ga nabrak tombol X */
+                /* Animasi menu geser 2.5 detik super mulus */
+                transition: left 2.5s cubic-bezier(0.25, 1, 0.5, 1);
             }
-            .menu-links.aktif { right: 0; }
+            .menu-links.aktif { left: 0; } /* MUNCUL DARI KIRI */
         }
     </style>
 </head>
@@ -236,17 +247,37 @@
          JAVASCRIPT (ANIMASI & MENU)
     ========================================= -->
     <script>
-        // 1. Menu HP Toggle
+        // 1. Menu HP Toggle (Sekarang bisa nutup sendiri)
         const menuToggle = document.getElementById('menuToggle');
         const menuLinks = document.getElementById('menuLinks');
 
-        menuToggle.addEventListener('click', () => {
+        // Fungsi buat buka/tutup menu
+        function toggleMenu() {
             menuLinks.classList.toggle('aktif');
-            // Ubah ikon burger jadi X kalau lagi kebuka
             menuToggle.innerHTML = menuLinks.classList.contains('aktif') ? '✕' : '☰';
+        }
+
+        // Pas tombol burger diklik
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Pas link di dalem menu diklik (Biar menu nutup)
+        const links = menuLinks.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menuLinks.classList.remove('aktif');
+                menuToggle.innerHTML = '☰';
+            });
         });
 
-        // 2. Animasi Scroll (Pake Intersection Observer, lebih anti-gagal)
+        // Pas ngeklik sembarang di luar menu (Biar menu nutup)
+        document.addEventListener('click', (e) => {
+            if (!menuLinks.contains(e.target) && !menuToggle.contains(e.target) && menuLinks.classList.contains('aktif')) {
+                menuLinks.classList.remove('aktif');
+                menuToggle.innerHTML = '☰';
+            }
+        });
+
+        // 2. Animasi Scroll (Lebih mulus)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
