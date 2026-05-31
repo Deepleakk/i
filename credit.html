@@ -3,368 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit - Marga IEPEAS</title>
-    <link rel="stylesheet" href="style.css">
+    <title>AI Assistant AVIS - IEPEAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Tambahan khusus credit */
-        .credit-container {
-            max-width: 1000px;
-            margin: 80px auto;
-            padding: 20px;
+        /* =========================================
+           UI AI COMMAND CENTER - TEMA KONSISTEN
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: #030308;
+            background-image: radial-gradient(circle at 50% -20%, #151030 0%, #030308 80%);
+            color: #e0e0e0; height: 100vh; display: flex; flex-direction: column; overflow: hidden;
         }
-        .credit-card {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px 45px;
-            margin-bottom: 30px;
+
+        #spaceCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        .ai-core-bg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(0,210,255,0.05) 0%, rgba(112,0,255,0.02) 40%, transparent 70%);
+            border-radius: 50%; z-index: -1; animation: pulseCore 8s infinite alternate ease-in-out; pointer-events: none;
         }
-        .credit-card h1 {
-            font-size: 42px;
-            text-align: center;
-            color: white;
-            margin-bottom: 10px;
+        @keyframes pulseCore { 0% { transform: translate(-50%, -50%) scale(0.8); } 100% { transform: translate(-50%, -50%) scale(1.2); } }
+
+        /* NAVBAR */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(3, 3, 8, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 210, 255, 0.15); z-index: 10; }
+        .nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; letter-spacing: 2px; background: linear-gradient(90deg, #00d2ff, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; text-decoration: none; }
+        .menu-links { display: flex; gap: 30px; }
+        .menu-links a { color: #a0a0b0; text-decoration: none; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.4s ease; }
+        .menu-links a:hover, .menu-links a.active { color: #fff; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #fff; z-index: 1000; }
+
+        /* MAIN CHAT CONTAINER */
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; width: 100%; max-width: 1000px; margin: 0 auto; }
+
+        .chat-container {
+            width: 100%; height: 95%; background: rgba(15, 15, 25, 0.6); backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 24px; display: flex; flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,210,255,0.05); overflow: hidden;
+            animation: bootUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        .credit-card .sub {
-            text-align: center;
-            color: #a78bfa;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-        .credit-card h2 {
-            font-size: 1.6rem;
-            margin: 25px 0 15px 0;
-            border-left: 6px solid #ffb347;
-            padding-left: 18px;
-            color: #f0f4fa;
-        }
+        @keyframes bootUp { 0% { opacity: 0; transform: translateY(30px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+
+        /* Header Chat */
+        .chat-header { padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; background: rgba(0,210,255,0.02); }
+        .ai-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .ai-title span { font-size: 0.75rem; background: rgba(0,210,255,0.1); padding: 4px 12px; border-radius: 20px; color: #00d2ff; border: 1px solid rgba(0,210,255,0.3); font-weight: bold; }
+        .status { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #a0a0b0; font-family: 'Space Grotesk', sans-serif; }
+        .status-dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; animation: blink 2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Area Chat */
+        .chat-box { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; scroll-behavior: smooth; }
+        .chat-box::-webkit-scrollbar { width: 6px; }
+        .chat-box::-webkit-scrollbar-thumb { background: rgba(0,210,255,0.2); border-radius: 10px; }
+
+        .msg-wrapper { display: flex; gap: 15px; max-width: 85%; animation: slideIn 0.4s ease forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .msg-wrapper.user { align-self: flex-end; flex-direction: row-reverse; }
+        .msg-wrapper.ai { align-self: flex-start; }
+
+        .avatar { width: 40px; height: 40px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; flex-shrink: 0; }
+        .user .avatar { background: linear-gradient(135deg, #3a7bd5, #00d2ff); box-shadow: 0 5px 15px rgba(0,210,255,0.3); }
+        .ai .avatar { background: rgba(255,255,255,0.05); border: 1px solid rgba(0,210,255,0.3); }
+
+        .msg-bubble { padding: 15px 20px; border-radius: 16px; font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; }
+        .user .msg-bubble { background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.2); color: #fff; border-top-right-radius: 4px; }
+        .ai .msg-bubble { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); color: #e0e0e0; border-top-left-radius: 4px; }
         
-        /* Carousel untuk Owner & Admin (bisa digeser) */
-        .carousel-section {
-            margin-bottom: 30px;
-        }
-        .carousel-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .carousel-title .icon {
-            font-size: 48px;
-            background: rgba(59,130,246,0.2);
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 2px solid #ffb347;
-        }
-        .carousel-title h3 {
-            font-size: 1.8rem;
-            color: #ffecb3;
-        }
-        .carousel-horizontal {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            scroll-snap-type: x mandatory;
-            padding: 10px 0 20px;
-            scroll-behavior: smooth;
-        }
-        .carousel-horizontal::-webkit-scrollbar {
-            height: 6px;
-        }
-        .carousel-horizontal::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-        }
-        .carousel-horizontal::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 10px;
-        }
-        .carousel-item {
-            flex: 0 0 300px;
-            scroll-snap-align: start;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 28px;
-            padding: 20px;
-            border: 1px solid rgba(59,130,246,0.3);
-            transition: 0.2s;
-        }
-        .carousel-item:hover {
-            transform: translateY(-5px);
-            background: rgba(59,130,246,0.2);
-        }
-        .carousel-item .wa-icon {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        .carousel-item .contact-info {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        .carousel-item a {
-            color: #cbd5e6;
-            text-decoration: none;
-            font-size: 0.9rem;
-            word-break: break-all;
-        }
-        .carousel-item .name {
-            color: #a78bfa;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
+        .chat-image { max-width: 250px; border-radius: 12px; margin-top: 10px; border: 1px solid rgba(0,210,255,0.3); display: block; }
+
+        .typing-indicator { display: flex; gap: 5px; padding: 10px 5px; }
+        .dot { width: 8px; height: 8px; background: #00d2ff; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .dot:nth-child(1) { animation-delay: -0.32s; } .dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px #00d2ff; } }
+
+        /* Area Input & Upload */
+        .input-wrapper { display: flex; flex-direction: column; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.05); padding: 15px 30px; }
         
-        /* Grid untuk tim pengembang */
-        .contributor-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .contributor-card {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 20px;
-            text-align: center;
-            width: 200px;
-            border: 1px solid rgba(59,130,246,0.2);
-            transition: 0.2s;
-        }
-        .contributor-card:hover {
-            transform: translateY(-5px);
-            background: rgba(59,130,246,0.2);
-        }
-        .contributor-card .icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        .contributor-card .name {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .contributor-card .role {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
+        .image-preview-container { display: none; align-items: center; gap: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(0,210,255,0.2); width: fit-content; }
+        .image-preview-container img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+        .image-preview-container .remove-btn { color: #ff4444; cursor: pointer; font-weight: bold; font-size: 1.2rem; }
+        .upload-status { font-size: 0.8rem; color: #00d2ff; }
+
+        .input-area { display: flex; gap: 15px; align-items: flex-end; }
+        .btn-attach { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 55px; height: 55px; border-radius: 16px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
+        .btn-attach:hover { background: rgba(255,255,255,0.1); border-color: #00d2ff; }
         
-        .tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .tech-badge {
-            background: rgba(59,130,246,0.3);
-            border-radius: 40px;
-            padding: 8px 18px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(59,130,246,0.4);
-        }
-        .special-thanks {
-            background: rgba(255, 180, 71, 0.15);
-            border-left: 4px solid #ffb347;
-            padding: 15px 20px;
-            border-radius: 20px;
-            margin: 25px 0 10px;
-            text-align: center;
-        }
-        .special-thanks p {
-            margin-bottom: 0;
-            font-size: 1rem;
-            color: #ffecb3;
-        }
-        .credit-footer {
-            text-align: center;
-            font-size: 8px;
-            opacity: 0.5;
-            margin-top: 40px;
-        }
+        .input-box { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 16px; color: #fff; font-size: 1rem; resize: none; height: 55px; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: rgba(0,210,255,0.5); background: rgba(0,210,255,0.02); }
         
-        /* Animasi scroll reveal */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s ease;
-        }
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        @media (max-width: 650px) {
-            .credit-card { padding: 25px 20px; }
-            .credit-card h1 { font-size: 32px; }
-            .credit-card h2 { font-size: 1.4rem; }
-            .contributor-card { width: 160px; }
-            .carousel-item { flex: 0 0 85%; }
-            .carousel-title h3 { font-size: 1.4rem; }
-            .carousel-title .icon { width: 55px; height: 55px; font-size: 36px; }
+        .send-btn { width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #00d2ff, #7000ff); border: none; color: white; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,210,255,0.5); }
+        .send-btn:disabled, .btn-attach:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .menu-toggle { display: block; }
+            .menu-links { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; background: rgba(5, 5, 15, 0.98); flex-direction: column; padding: 100px 40px; transition: left 0.5s ease; border-right: 1px solid rgba(0,210,255,0.1); }
+            .menu-links.aktif { left: 0; }
+            main { padding: 10px; height: calc(100vh - 70px); }
+            .chat-box { padding: 15px; } .input-wrapper { padding: 15px; }
         }
     </style>
 </head>
 <body>
-    <!-- Menu titik tiga -->
-    <div class="menu-container">
+    <canvas id="spaceCanvas"></canvas>
+    <div class="ai-core-bg"></div>
+
+    <nav>
+        <a href="home.html" class="nav-brand">IEPEAS</a>
         <div class="menu-toggle" id="menuToggle">☰</div>
-        <div class="menu-dropdown" id="menuDropdown">
-            <div class="menu-close" id="menuClose">✕</div>
-            <a href="home.html">🏠 Home</a>
-            <a href="web.html">📝 Daftar</a>
-            <a href="linktree.html">🔗 Linktree</a>
-            <a href="credit.html">🎖️ Credit</a>
+        <div class="menu-links" id="menuLinks">
+            <a href="home.html">Home</a>
+            <a href="daftar.html">Daftar</a>
+            <a href="linktree.html">Links</a>
+            <a href="ai.html" class="active" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">🤖 AI Chat</a>
         </div>
-    </div>
+    </nav>
 
-    <div class="credit-container">
-        <div class="credit-card">
-            <h1 class="scroll-reveal">🎖️ Credit & Kontributor</h1>
-            <div class="sub scroll-reveal">Terima kasih kepada semua pihak yang telah membantu</div>
+    <main>
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="ai-title">AVIS <span>ONLINE</span></div>
+                <div class="status">SYSTEM ACTIVE <div class="status-dot"></div></div>
+            </div>
 
-            <!-- CAROUSEL PENDIRI -->
-            <div class="carousel-section scroll-reveal">
-                <div class="carousel-title">
-                    <div class="icon">👑</div>
-                    <h3>Pendiri IEPEAS</h3>
-                </div>
-                <div class="carousel-horizontal">
-                    <div class="carousel-item">
-                        <div class="name">rama</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6289515560507" target="_blank">+62 895-1556-0507</a>
-                        </div>
-                    </div>
+            <div class="chat-box" id="chatBox">
+                <div class="msg-wrapper ai">
+                    <div class="avatar">🛰️</div>
+                    <div class="msg-bubble">Halo! Panggil saya **AVIS**. Kamu sudah datang ke tempat yang tepat, karena tidak ada yang lebih seru untuk dibahas selain deru mesin jet di atmosfer dan keheningan misterius di luar angkasa sana. Ada topik spesifik yang ingin kamu jelajahi hari ini?</div>
                 </div>
             </div>
 
-            <!-- CAROUSEL ADMIN (bisa digeser) -->
-            <div class="carousel-section scroll-reveal">
-                <div class="carousel-title">
-                    <div class="icon">👥</div>
-                    <h3>Admin IEPEAS</h3>
+            <div class="input-wrapper">
+                <!-- Preview Gambar sebelum dikirim -->
+                <div class="image-preview-container" id="imagePreviewContainer">
+                    <img id="imagePreview" src="" alt="preview">
+                    <div class="upload-status" id="uploadStatus">Siap dikirim</div>
+                    <div class="remove-btn" id="removeImgBtn">✕</div>
                 </div>
-                <div class="carousel-horizontal">
-                    <div class="carousel-item">
-                        <div class="name">nazneen</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6285715372790" target="_blank">+62 857-1537-2790</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="name">revv</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/62895398972020" target="_blank">+62 895-3989-72020</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="name">riski</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6282379849016" target="_blank">+62 823-7984-9016</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="name">kusuma</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6287843071054" target="_blank">+62 878-4307-1054</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="name">dian</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6281460127110" target="_blank">+62 814-6012-7110</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="name">faiz</div>
-                        <div class="contact-info">
-                            <span class="wa-icon">📱</span>
-                            <a href="https://wa.me/6288906142026" target="_blank">+62 889-0614-2026</a>
-                        </div>
-                    </div>
+
+                <div class="input-area">
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <button id="attachBtn" class="btn-attach">📎</button>
+                    <textarea id="chatInput" class="input-box" placeholder="Ketik transmisi pesan di sini..." rows="1"></textarea>
+                    <button id="sendBtn" class="send-btn">🚀</button>
                 </div>
-            </div>
-
-            <h2 class="scroll-reveal">👥 Tim Pengembang</h2>
-            <div class="contributor-grid scroll-reveal">
-                <div class="contributor-card">
-                    <div class="icon">🤖</div>
-                    <div class="name">DeepSeek AI</div>
-                    <div class="role">Coding Assistant</div>
-                </div>
-                <div class="contributor-card">
-                    <div class="icon">🎨</div>
-                    <div class="name">Marga IEPEAS</div>
-                    <div class="role">Ide & Konsep</div>
-                </div>
-            </div>
-
-            <h2 class="scroll-reveal">💻 Teknologi yang Digunakan</h2>
-            <div class="tech-list scroll-reveal">
-                <span class="tech-badge">HTML5</span>
-                <span class="tech-badge">CSS3</span>
-                <span class="tech-badge">JavaScript</span>
-                <span class="tech-badge">GitHub Pages</span>
-                <span class="tech-badge">WhatsApp API</span>
-            </div>
-
-            <h2 class="scroll-reveal">📱 Sumber Daya</h2>
-            <p class="scroll-reveal">• Ikon & emoji dari sistem operasi dan Unicode<br>
-            • Inspirasi desain dari komunitas space & aviation<br>
-            • Background nebula & efek blur dari CSS modern</p>
-
-            <h2 class="scroll-reveal">🙏 Ucapan Terima Kasih</h2>
-            <p class="scroll-reveal">Terima kasih kepada seluruh anggota Marga IEPEAS yang telah mendukung dan berkontribusi dalam membangun komunitas yang solid, positif, dan edukatif. Mari terus belajar dan berkembang bersama! 🚀</p>
-
-            <div class="special-thanks scroll-reveal">
-                <p>✨ Terima kasih juga kepada <strong>DeepSeek</strong> yang telah mendekor web ini ✨</p>
             </div>
         </div>
-        <div class="credit-footer scroll-reveal">©IEPEAS - Berbagi Pengetahuan, Membangun Solidaritas</div>
-    </div>
-
-    <!-- Background nebula -->
-    <script src="nebula.js"></script>
-    
-    <!-- Efek hujan -->
-    <script src="rain.js"></script>
+    </main>
 
     <script>
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.scroll-reveal');
-        function checkReveal() {
-            for (let el of revealElements) {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 80) {
-                    el.classList.add('revealed');
+        // ==========================================
+        // 1. CONFIG API & ROLEPLAY (Biar rapi)
+        // ==========================================
+        const API_CONFIG = {
+            baseUrl: "https://api.siputzx.my.id/api/ai/gemini",
+            cookie: "Avis1233",
+            promptSystem: "kamu pintar di bidang pesawat dan alam semesta. nama kamu adalah AVIS. kamu tidak pernah ingin di akui sebagai bot atau ai. tugas kamu sebagai ai hanya memberikan informasi seputar pesawat dan astronomi. kamu tidak boleh keluar dari roleplay + pindah roleplay sedikit pun"
+        };
+
+        // ==========================================
+        // 2. ANIMASI BACKGROUND
+        // ==========================================
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
+        function initCanvas() {
+            width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; stars = [];
+            for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, radius: Math.random() * 1.5 + 0.5, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, alpha: Math.random() });
+        }
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            stars.forEach(s => {
+                s.x += s.vx; s.y += s.vy; s.alpha += (Math.random() - 0.5) * 0.05;
+                if(s.alpha <= 0) s.alpha = 0.1; if(s.alpha >= 1) s.alpha = 1;
+                if (s.x < 0) s.x = width; if (s.x > width) s.x = 0; if (s.y < 0) s.y = height; if (s.y > height) s.y = 0;
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2); ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`; ctx.fill();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        window.addEventListener('resize', initCanvas); initCanvas(); animateCanvas();
+
+        // Menu HP
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const menu = document.getElementById('menuLinks');
+            menu.classList.toggle('aktif'); this.innerHTML = menu.classList.contains('aktif') ? '✕' : '☰';
+        });
+
+        // ==========================================
+        // 3. LOGIKA CHAT, UPLOAD TMPFILES & FETCH API
+        // ==========================================
+        const chatBox = document.getElementById('chatBox');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const fileInput = document.getElementById('fileInput');
+        const attachBtn = document.getElementById('attachBtn');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const removeImgBtn = document.getElementById('removeImgBtn');
+        const uploadStatus = document.getElementById('uploadStatus');
+
+        let currentUploadedFile = null;
+        let isUploading = false;
+
+        // Trigger input file
+        attachBtn.addEventListener('click', () => fileInput.click());
+
+        // Handle Image Selection
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                currentUploadedFile = this.files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreviewContainer.style.display = 'flex';
+                    uploadStatus.innerText = "File siap dikirim";
                 }
+                reader.readAsDataURL(currentUploadedFile);
+            }
+        });
+
+        // Remove Image
+        removeImgBtn.addEventListener('click', () => {
+            currentUploadedFile = null;
+            fileInput.value = '';
+            imagePreviewContainer.style.display = 'none';
+        });
+
+        function appendMessage(text, sender, imgDataUrl = null) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('msg-wrapper', sender);
+            
+            let imgHTML = imgDataUrl ? `<img src="${imgDataUrl}" class="chat-image">` : '';
+            wrapper.innerHTML = `
+                <div class="avatar">${sender === 'user' ? '👨‍🚀' : '🛰️'}</div>
+                <div class="msg-bubble">${text} ${imgHTML}</div>
+            `;
+            chatBox.appendChild(wrapper);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function showTyping() {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('msg-wrapper', 'ai');
+            wrapper.id = 'typingIndicator';
+            wrapper.innerHTML = `<div class="avatar">🛰️</div><div class="msg-bubble"><div class="typing-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+            chatBox.appendChild(wrapper); chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Fungsi utama kirim pesan
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text && !currentUploadedFile) return;
+
+            // Kunci tombol
+            sendBtn.disabled = true; attachBtn.disabled = true; chatInput.disabled = true;
+
+            // Tampilkan pesan user lokal
+            let previewUrl = currentUploadedFile ? imagePreview.src : null;
+            appendMessage(text, 'user', previewUrl);
+            
+            chatInput.value = '';
+            showTyping();
+
+            try {
+                let imageUrlToAPI = null;
+
+                // 1. UPLOAD KE TMPFILES KALAU ADA GAMBAR
+                if (currentUploadedFile) {
+                    uploadStatus.innerText = "Uploading ke tmpfiles...";
+                    const formData = new FormData();
+                    formData.append('file', currentUploadedFile);
+                    
+                    const uploadRes = await fetch('https://tmpfiles.org/api/v1/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const uploadData = await uploadRes.json();
+                    if (uploadData.status === 'success') {
+                        // Tmpfiles ngasih URL view, kita ubah jadi direct link (dl)
+                        imageUrlToAPI = uploadData.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+                    }
+                    
+                    // Reset UI preview setelah berhasil upload
+                    removeImgBtn.click();
+                }
+
+                // 2. HIT API SIPUTZX
+                const params = new URLSearchParams({
+                    text: text || "Jelaskan gambar ini", 
+                    cookie: API_CONFIG.cookie,
+                    promptSystem: API_CONFIG.promptSystem
+                });
+
+                if (imageUrlToAPI) {
+                    params.append('imageUrl', imageUrlToAPI);
+                }
+
+                const finalUrl = `${API_CONFIG.baseUrl}?${params.toString()}`;
+                
+                const apiRes = await fetch(finalUrl, { method: 'GET' });
+                const apiData = await apiRes.json();
+                
+                document.getElementById('typingIndicator').remove();
+                
+                if (apiData.status && apiData.data && apiData.data.response) {
+                    appendMessage(apiData.data.response, 'ai');
+                } else {
+                    appendMessage("⚠️ Komunikasi terputus. Sistem AVIS gagal merespon.", 'ai');
+                }
+
+            } catch (error) {
+                document.getElementById('typingIndicator')?.remove();
+                appendMessage(`⚠️ Error koneksi: ${error.message}`, 'ai');
+            } finally {
+                // Buka kunci tombol
+                sendBtn.disabled = false; attachBtn.disabled = false; chatInput.disabled = false;
+                chatInput.focus();
             }
         }
-        window.addEventListener('scroll', checkReveal);
-        checkReveal();
 
-        // Menu dropdown
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const menuClose = document.getElementById('menuClose');
-        menuToggle.addEventListener('click', () => menuDropdown.classList.add('show'));
-        menuClose.addEventListener('click', () => menuDropdown.classList.remove('show'));
-        menuDropdown.addEventListener('click', (e) => { if (e.target === menuDropdown) menuDropdown.classList.remove('show'); });
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+        });
     </script>
 </body>
 </html>
