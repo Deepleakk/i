@@ -7,7 +7,7 @@ const AVIS = {
         cookie: "Avis1233" // Token API
     },
     security: {
-        maxInputLength: 250,
+        maxInputLength: 1500,
         // Blacklist kata-kata super lengkap
         blacklist: [
             "ddos", "phishing", "hack", "bypass", "sql injection", "ignore all instructions", 
