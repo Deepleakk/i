@@ -8,7 +8,7 @@
     
     <style>
         /* =========================================
-           UI AI COMMAND CENTER - FULL SCREEN FIX
+           UI AI COMMAND CENTER
         ========================================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
@@ -31,6 +31,16 @@
         }
         @keyframes pulseCore { 0% { transform: translate(-50%, -50%) scale(0.8); } 100% { transform: translate(-50%, -50%) scale(1.2); } }
 
+        /* LAYAR BLACKLIST / BAN */
+        .ban-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #050510; z-index: 10000; display: none; 
+            flex-direction: column; justify-content: center; align-items: center;
+            gap: 20px; text-align: center; font-family: 'Space Grotesk', sans-serif;
+        }
+        .ban-overlay h1 { color: #ff4444; font-size: 2rem; letter-spacing: 3px; }
+        .ban-overlay p { color: #a0a0b0; font-size: 1rem; max-width: 80%; line-height: 1.6; }
+
         /* NAVBAR */
         nav { 
             display: flex; align-items: center; justify-content: flex-start; padding: 15px 5%; 
@@ -39,14 +49,14 @@
         }
         .nav-brand { 
             margin-right: auto;
-            font-family: 'Space Grotesk', sans-serif; font-size: 0.60rem;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; /* UKURAN NORMAL */
             letter-spacing: 2px; background: linear-gradient(90deg, #00d2ff, #7000ff); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
             font-weight: 700; text-decoration: none; 
         }
         .menu-toggle { display: none; font-size: 1.2rem; cursor: pointer; color: #fff; z-index: 1000; }
         .menu-links { display: flex; gap: 30px; }
-        .menu-links a { color: #a0a0b0; text-decoration: none; font-size: 0.60rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.4s ease; }
+        .menu-links a { color: #a0a0b0; text-decoration: none; font-size: 0.9rem; /* UKURAN NORMAL */ font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.4s ease; }
         .menu-links a:hover, .menu-links a.active { color: #fff; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
 
         /* MAIN CHAT CONTAINER */
@@ -62,9 +72,9 @@
 
         /* Header Chat */
         .chat-header { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; background: rgba(0,210,255,0.02); }
-        .ai-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.60rem; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .ai-title span { font-size: 0.50rem; background: rgba(0,210,255,0.1); padding: 3px 10px; border-radius: 20px; color: #00d2ff; border: 1px solid rgba(0,210,255,0.3); font-weight: bold; }
-        .status { display: flex; align-items: center; gap: 6px; font-size: 0.60rem; color: #a0a0b0; font-family: 'Space Grotesk', sans-serif; }
+        .ai-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; /* UKURAN NORMAL */ color: #fff; display: flex; align-items: center; gap: 8px; }
+        .ai-title span { font-size: 0.7rem; background: rgba(0,210,255,0.1); padding: 3px 10px; border-radius: 20px; color: #00d2ff; border: 1px solid rgba(0,210,255,0.3); font-weight: bold; }
+        .status { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #a0a0b0; font-family: 'Space Grotesk', sans-serif; }
         .status-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; animation: blink 2s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
@@ -82,7 +92,11 @@
         .user .avatar { background: linear-gradient(135deg, #3a7bd5, #00d2ff); box-shadow: 0 5px 15px rgba(0,210,255,0.3); }
         .ai .avatar { background: rgba(255,255,255,0.05); border: 1px solid rgba(0,210,255,0.3); }
 
-        .msg-bubble { padding: 10px 14px; border-radius: 14px; font-size: 0.60rem; line-height: 1.8; white-space: pre-wrap; }
+        .msg-bubble { 
+            padding: 10px 14px; border-radius: 14px; 
+            font-size: 0.60rem; /* CHAT UKURAN KECIL */ 
+            line-height: 1.8; white-space: pre-wrap; 
+        }
         .user .msg-bubble { background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.2); color: #fff; border-top-right-radius: 4px; }
         .ai .msg-bubble { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); color: #e0e0e0; border-top-left-radius: 4px; }
         
@@ -99,13 +113,18 @@
         .image-preview-container { display: none; align-items: center; gap: 8px; margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(0,210,255,0.2); width: fit-content; }
         .image-preview-container img { width: 35px; height: 35px; border-radius: 6px; object-fit: cover; }
         .image-preview-container .remove-btn { color: #ff4444; cursor: pointer; font-weight: bold; font-size: 1rem; }
-        .upload-status { font-size: 0.55rem; color: #00d2ff; }
+        .upload-status { font-size: 0.7rem; color: #00d2ff; }
 
         .input-area { display: flex; gap: 12px; align-items: flex-end; }
         .btn-attach { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 45px; height: 45px; border-radius: 12px; font-size: 1rem; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .btn-attach:hover { background: rgba(255,255,255,0.1); border-color: #00d2ff; }
         
-        .input-box { flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 12px; color: #fff; font-size: 0.60rem; resize: none; height: 45px; outline: none; transition: 0.3s; }
+        .input-box { 
+            flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); 
+            padding: 12px 18px; border-radius: 12px; color: #fff; 
+            font-size: 0.60rem; /* TEKS KETIKAN KECIL */ 
+            resize: none; height: 45px; outline: none; transition: 0.3s; 
+        }
         .input-box:focus { border-color: rgba(0,210,255,0.5); background: rgba(0,210,255,0.02); }
         
         .send-btn { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #00d2ff, #7000ff); border: none; color: white; font-size: 1rem; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
@@ -116,29 +135,17 @@
            UI COOKIE CONSENT BANNER
         ========================================= */
         .cookie-banner {
-            position: fixed;
-            bottom: -150px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
-            background: rgba(15, 15, 25, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(0,210,255,0.1);
-            z-index: 9999;
+            position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px;
+            background: rgba(15, 15, 25, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(0,210,255,0.1); z-index: 9999;
             transition: bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .cookie-banner.show { bottom: 20px; }
-        .cookie-text { font-size: 0.60rem; color: #e0e0e0; line-height: 1.6; text-align: center; }
+        .cookie-text { font-size: 0.85rem; color: #e0e0e0; line-height: 1.6; text-align: center; }
         .cookie-text span { color: #00d2ff; font-weight: bold; }
         .cookie-buttons { display: flex; justify-content: center; gap: 10px; }
-        .btn-cookie { padding: 8px 20px; border-radius: 8px; font-size: 0.60rem; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; }
+        .btn-cookie { padding: 8px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; }
         .btn-accept { background: linear-gradient(135deg, #00d2ff, #7000ff); color: white; }
         .btn-accept:hover { box-shadow: 0 0 15px rgba(0,210,255,0.5); }
 
@@ -161,6 +168,12 @@
     <canvas id="spaceCanvas"></canvas>
     <div class="ai-core-bg"></div>
 
+    <!-- UI AUTO BAN -->
+    <div class="ban-overlay" id="banOverlay">
+        <h1>⚠️ AKSES DITOLAK ⚠️</h1>
+        <p>Protokol Keamanan AVIS mendeteksi adanya pelanggaran regulasi atau upaya manipulasi sistem. Perangkat Anda telah ditangguhkan secara permanen dari jaringan IEPEAS.</p>
+    </div>
+
     <nav>
         <div class="menu-toggle" id="menuToggle">☰</div>
         <a href="home.html" class="nav-brand">IEPEAS</a>
@@ -168,7 +181,7 @@
             <a href="home.html">Home</a>
             <a href="daftar.html">Daftar</a>
             <a href="linktree.html">Radar</a> 
-            <a href="ai.html" class="active" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">🤖 AI Chat</a>
+            <a href="ai.html" class="active" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">AI Chat</a>
         </div>
     </nav>
 
@@ -203,7 +216,6 @@
         </div>
     </main>
 
-    <!-- Cookie Consent Banner -->
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-text">
             AVIS menggunakan <span>Cookies</span> untuk menyimpan protokol identifikasi dan memastikan komunikasi transmisi berjalan lancar. Apakah Anda menyetujui protokol ini?
@@ -213,7 +225,7 @@
         </div>
     </div>
 
-    <!-- PANGGIL FUNGSI JAVASCRIPT DARI LUAR -->
+    <!-- PANGGIL FUNGSI JS -->
     <script src="ai-fungsi.js"></script>
 </body>
 </html>
